@@ -5,7 +5,7 @@
 
 ## Overview
 
-Third-party **MSA-compliant** optics are supported when validated; **DOM** diagnostics are read via **show controllers** / **optics** CLIs. Some platforms allow **breakout** speed selection per port.
+Third-party **MSA-compliant** optics are supported when validated; **DOM** diagnostics are read via **show controllers** / **optics** CLIs.
 
 ## Configuration source (Cisco 8000, IOS XR 26.x)
 
@@ -15,12 +15,9 @@ Third-party **MSA-compliant** optics are supported when validated; **DOM** diagn
 
 ```text
 ! Third-party optics are supported by default on Cisco 8000 when MSA-compliant.
-! No 'transceiver permit pid all' command exists on IOS XR for Cisco 8000.
 ! Verify optic status with:
-!   show controllers optics <interface>
-!   show inventory
-! Breakout configuration (where supported):
-hw-module port-range 24 31 location 0/0/CPU0 mode 4x100
+   show controllers optics <interface>
+   show inventory
 !
 ```
 
