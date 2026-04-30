@@ -15,7 +15,6 @@ Third-party **MSA-compliant** optics are supported when validated; **DOM** diagn
 
 ```text
 ! Third-party optics are supported by default on Cisco 8000 when MSA-compliant.
-! No 'transceiver permit pid all' command exists on IOS XR for Cisco 8000.
 ! Verify optic status with:
 !   show controllers optics <interface>
 !   show inventory
