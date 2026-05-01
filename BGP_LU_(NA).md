@@ -15,6 +15,7 @@
 
 ```text
 ! BGP-LU: prerequisite route-policies
+hw-module profile cef bgplu enable
 route-policy LU-IMPORT
   pass
 end-policy
