@@ -17,14 +17,17 @@
 ! EPL: pw-class with flow-label for load-balancing across equal-cost paths
 l2vpn
  pw-class FAT_CLASS
-  load-balancing
-   flow-label both    ! Options: both, transmit, or receive
+   encapsulation mpls
+   control-word
+   load-balancing
+    flow-label both
+   !
   !
  !
  xconnect group XG-CUST1
   p2p VPWS1-CUST1
    interface TenGigE0/0/0/0
-   neighbor evpn evi 1234 target 1 source 2
+   neighbor evpn pw-id 100
     pw-class FAT_CLASS
    !
 interface TenGigE0/0/0/0
