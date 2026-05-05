@@ -14,41 +14,34 @@
 ## Sample IOS XR configuration
 
 ```text
-! BGP neighbor BFD
-router bgp 65001
- neighbor 198.51.100.2
-  remote-as 65001
-  bfd fast-detect
-  bfd minimum-interval 50
-  bfd multiplier 3
+! IPv4 Multihop BFD
+bfd
+ multihop ttl-drop-threshold 225
+ multipath include location 0/X
+router bgp 100
+ neighbor 209.165.200.225
+ remote-as 2000
+ update-source loopback 1
+ bfd fast-detect
+ bfd multiplier 3
+ bfd minimum-interval 1200
 !
-! IS-IS BFD on core Bundle-Ether (per-interface under router isis)
-router isis CORE
- net 49.0001.1920.0200.0001.00
- address-family ipv4 unicast
-  metric-style wide
- !
- interface Bundle-Ether1
+! BFD with IS-IS
+router isis 65444
+ interface HundredGige 0/3/0/1
+  bfd minimum-interval 1200
+  bfd multiplier 7
   bfd fast-detect ipv4
  !
- interface Bundle-Ether2
-  bfd fast-detect ipv6
- !
-root
-! Interface-level BFD timers on Bundle-Ether (L3)
-! These are configured at the global interface level (outside router isis)
+! BFD over Bundle(BOB) forwith hardware offload (Micro-BFD) 
 interface Bundle-Ether10
  bfd mode ietf
  bfd address-family ipv4 fast-detect
+ bfd address-family ipv4 destination X.X.X.X
  bfd address-family ipv4 minimum-interval 50
  bfd address-family ipv4 multiplier 3
 !
-interface Bundle-Ether11
- bfd mode ietf
- bfd address-family ipv6 fast-detect
- bfd address-family ipv6 minimum-interval 50
- bfd address-family ipv6 multiplier 3
-!
+
 ```
 
 > **Note:** Examples are illustrative for Cisco IOS XR on Cisco 8000-class systems. Validate syntax, scale limits, and feature availability for your exact release (K100/P100) and interface types.

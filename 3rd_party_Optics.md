@@ -18,6 +18,10 @@ Third-party **MSA-compliant** optics are supported when validated; **DOM** diagn
 ! Verify optic status with:
    show controllers optics <interface>
    show inventory
+
+Available breakout options depend on the Optic type
+controller optics <interface>
+    breakout 4x10 | 4x25 | 8x25 | 1x40 | 2x50 | 8x50 | 1x100 | 2x100 | 3x100 | 4x100 | 8x100 | 2x200 | 2x400
 !
 ```
 
