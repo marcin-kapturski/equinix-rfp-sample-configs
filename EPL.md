@@ -14,33 +14,21 @@
 ## Sample IOS XR configuration
 
 ```text
-! EPL: L2VPN EVPN VPWS with SR-TE preferred-path
+! EPL: pw-class with flow-label for load-balancing across equal-cost paths
 l2vpn
- router-id 1.1.1.1
- logging
-  pseudowire
-  nsr
-  vfi
- !
- pw-class RED
-  encapsulation mpls
-   preferred-path sr-te policy RED fallback disable
+ pw-class FAT_CLASS
+  load-balancing
+   flow-label both    ! Options: both, transmit, or receive
   !
  !
- pw-class BLUE
-  encapsulation mpls
-   preferred-path sr-te policy BLUE fallback disable
-  !
- !
- xconnect group NSO-VPWS-Customer1
-  p2p NSO-VPWS-Customer1
+ xconnect group XG-CUST1
+  p2p VPWS1-CUST1
    interface TenGigE0/0/0/0
    neighbor evpn evi 1234 target 1 source 2
-    pw-class RED
+    pw-class FAT_CLASS
    !
-
 interface TenGigE0/0/0/0
- description NSO-VPWS-Customer1
+ description PW1-CUST1
  mtu 9192
  lldp
   receive disable
@@ -49,24 +37,6 @@ interface TenGigE0/0/0/0
  l2transport
   propagate remote-status
  !
-```
-
-### Flow Aware Transport (FAT) pseudowire
-
-```text
-! FAT: pw-class with flow-label for load-balancing across equal-cost paths
-l2vpn
- pw-class FAT_CLASS
-  load-balancing
-   flow-label both    ! Options: both, transmit, or receive
-  !
- !
- xconnect group NSO-VPWS-Customer1
-  p2p NSO-VPWS-Customer1
-   interface TenGigE0/0/0/0
-   neighbor evpn evi 1234 target 1 source 2
-    pw-class FAT_CLASS
-   !
 ```
 
 > **Note:** Examples are illustrative for Cisco IOS XR on Cisco 8000-class systems. Validate syntax, scale limits, and feature availability for your exact release (K100/P100) and interface types.

@@ -23,14 +23,28 @@ end-policy
 evpn
  evi 1001
 !
-interface GigabitEthernet0/0/0/1.100 l2transport
- encapsulation dot1q 100
+interface TenGigE0/3/0/8/0.12 l2transport
+ encapsulation dot1q 12
+ rewrite ingress tag pop 1 symmetric
+!
+interface TenGigE0/3/0/4/0.14 l2transport
+ encapsulation dot1q 14
+ rewrite ingress tag pop 1 symmetric
 !
 l2vpn
+ pw-class FAT_CLASS
+  load-balancing
+   flow-label both    ! Options: both, transmit, or receive
+  !
+ !
  xconnect group XG-EVPL
   p2p VPWS-1001
-   interface GigabitEthernet0/0/0/1.100
+   interface TenGigE0/3/0/8/0.12
+   !
+   interface TenGigE0/3/0/4/0.14
+   !
    neighbor evpn evi 1001 service 10
+    pw-class FAT_CLASS
 !
 router bgp 65001
  bgp router-id 192.0.2.1
@@ -46,23 +60,4 @@ router bgp 65001
 !
 ! Align EVI, RD/RT, and pw-class (control-word / encapsulation) with your design
 ```
-
-### Flow Aware Transport (FAT) pseudowire
-
-```text
-! FAT: pw-class with flow-label for load-balancing across equal-cost paths
-l2vpn
- pw-class FAT_CLASS
-  load-balancing
-   flow-label both    ! Options: both, transmit, or receive
-  !
- !
- xconnect group XG-EVPL
-  p2p VPWS-1001
-   interface GigabitEthernet0/0/0/1.100
-   neighbor evpn evi 1001 service 10
-    pw-class FAT_CLASS
-   !
-```
-
 > **Note:** Examples are illustrative for Cisco IOS XR on Cisco 8000-class systems. Validate syntax, scale limits, and feature availability for your exact release (K100/P100) and interface types.
