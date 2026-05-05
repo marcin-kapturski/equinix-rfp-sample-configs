@@ -28,8 +28,8 @@ interface TenGigE0/3/0/8/0.12 l2transport
  rewrite ingress tag pop 1 symmetric
 !
 interface TenGigE0/3/0/4/0.14 l2transport
- encapsulation dot1q 14
- rewrite ingress tag pop 1 symmetric
+ encapsulation dot1q 14 second-dot1q 1233
+ rewrite ingress tag pop 2 symmetric
 !
 l2vpn
  pw-class FAT_CLASS
