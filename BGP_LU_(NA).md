@@ -21,6 +21,13 @@ hw-module profile cef bgplu enable" is missing as a prerequisite.
 hw-module profile cef bgplu enable
 !!
 route-policy pass-all
+! BGP-LU: prerequisite route-policies
+hw-module profile cef bgplu enable
+route-policy LU-IMPORT
+  pass
+end-policy
+!
+route-policy LU-EXPORT
   pass
 end-policy
 !
