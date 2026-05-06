@@ -28,8 +28,14 @@ interface HundredGigE 0/2/0/2
  VRF A
  ipv4 address 10.0.0.1 255.255.255.0
  ipv4 verify unicast source reachable-via rx
+ ipv6 enable
  ipv6 address 2001::1/64
  ipv6 verify unicast source reachable-via rx
+
+interface TenGigE0/3/0/8/2
+ VRF A
+ ipv6 address fe80::1 link-local
+ ipv6 enable
 
 ! EIA (USE/IBR): EBGP MD5, ipv6 peer, 4-byte ASN, local-as, remove-private-AS
 key chain BGP-MD5
@@ -41,7 +47,9 @@ key chain BGP-MD5
  !
 !
 router bgp 40214
- vrf CUSTOMER-B
+ address-family ipv6 unicast
+  maximum-paths ebgp 4
+ vrf A
   neighbor 2001:1234::1
    remote-as 111999999
    local-as 12200000
@@ -52,6 +60,12 @@ router bgp 40214
     remove-private-AS
    !
   !
+  neighbor fd80::2
+   remote-as 1234
+   address-family ipv6 unicast
+    route-policy PASS in
+    route-policy PASS out
+   !
  !
 !
 ```
