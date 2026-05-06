@@ -9,7 +9,7 @@ Configuring **multi-service** ports on Cisco 8000 Series routers involves defini
 
 ## Configuration source (Cisco 8000, IOS XR 26.x)
 
-Cisco IOS XR **group** / **apply-group** (see [Cisco 8000 configuration guides](https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-ethernet-interfaces.html)
+Cisco IOS XR **multi-service port** (see [Cisco 8000 configuration guides](https://www.cisco.com/c/en/us/td/docs/iosxr/cisco8000/Interfaces/26xx/configuration/guide/b-interfaces-config-guide-cisco8k-r26xx/configuring-ethernet-interfaces.html)
 
 ## Sample IOS XR configuration
 
