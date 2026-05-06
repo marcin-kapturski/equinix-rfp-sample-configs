@@ -16,20 +16,48 @@
 ## Sample IOS XR configuration
 
 ```text
-! Cisco 8000 SR guide: enable SR-MPLS on IS-IS + node prefix-SID on Loopback0
+! Cisco 8000 SR guide: enable SR-MPLS on IS-IS + node prefix-SID on Loopback0 + custom SRGB
+segment-routing
+ global-block 600000 699999
+ local-block 20000 21000
+!
 router isis 1
  net 49.0001.1920.0200.0001.00
+ affinity-map GLOBAL bit-position 2
+ affinity-map REGION bit-position 1
+ affinity-map COUNTRY bit-position 0
  address-family ipv4 unicast
   metric-style wide level 1
+  microloop avoidance segment-routing
   router-id Loopback0
   segment-routing mpls
+ !
+ flex-algo 129
+  priority 200
+  advertise-definition
+  affinity include-any REGION COUNTRY
  !
  interface Loopback0
   passive
   address-family ipv4 unicast
    prefix-sid index 1001
   !
+ interface Bundle-Ether1
+  circuit-type level-2-only
+  bfd minimum-interval 15
+  bfd multiplier 3
+  bfd fast-detect ipv4
+  affinity flex-algo REGION
+  point-to-point
+  hello-padding sometimes
+  hello-password keychain ISIS-GROQ
+  address-family ipv4 unicast
+   fast-reroute per-prefix
+   fast-reroute per-prefix ti-lfa
+   metric 200
+  !
  !
+ mpls oam
 !
 ```
 
