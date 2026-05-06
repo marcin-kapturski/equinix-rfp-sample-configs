@@ -14,6 +14,7 @@
 ## Sample IOS XR configuration
 
 ```text
+! Netflow
 flow monitor-map FM-IPFIX
  record ipv4
  exporter EXP1
@@ -29,6 +30,16 @@ sampler-map SM1
 interface GigabitEthernet0/0/0/0
  flow ipv4 monitor FM-IPFIX sampler SM1 ingress
 !
+
+!Sflow
+flow exporter-map EXP-MAP
+ version sflow v5
+ packet-length 9000
+ transport udp 6343
+ source HundredGigE 0/0/0/1
+ source-address 192.127.10.1
+ destination 192.127.0.1
+ dfbit set
 ```
 
 > **Note:** Examples are illustrative for Cisco IOS XR on Cisco 8000-class systems. Validate syntax, scale limits, and feature availability for your exact release (K100/P100) and interface types.
